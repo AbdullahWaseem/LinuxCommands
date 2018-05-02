@@ -1,0 +1,30 @@
+# Author: 	 Abdullah Waseem
+# Email:	 engineerabdullah@ymail.com
+# Last Modified: June, 2017
+
+			OPEN MPI INSTALLATION
+
+create folder
+
+download and unpack latest openmpi file
+
+open terminal in that directory
+
+to install it in the home directory
+	./configure --prefix=$HOME/openmpi
+
+make all
+
+make install
+
+add openmpi to the path and environment variable
+	open .bashrc file with gedit in home folder		gedit .bashrc
+	add these two lines at the end
+		export PATH=$PATH:$HOME/openmpi/bin
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/openmpi/lib
+
+	open .cshrc with gedit in home folder			gedit .cshrc		(if its not there create it its safe)
+		setenv PATH ${PATH}:$HOME/openmpi/bin
+		setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:$HOME/openmpi/lib 
+	
+

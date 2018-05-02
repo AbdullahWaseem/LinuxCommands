@@ -1,0 +1,388 @@
+++++++++++++++++++++++++++++++++++++++++++++++
+U S E F U L L     L I N U X    C O M M A N D S
+++++++++++++++++++++++++++++++++++++++++++++++
+
+Author: 	Abdullah Waseem
+Email:	 	engineerabdullah@ymail.com
+Created:	2014			
+Last Modified:	14 April, 2017
+
+
+---------------------------
+B A T C H   R E N A M I N G
+---------------------------
+---to find all the files containing XYZ string as in the name and replace it with ABC
+rename 's/^(.*)XYZ/\1/ABC' *.pdf 
+
+			
+------------------------------------------------------------------------------
+F I N D   T H E    F I L E    A N D    E X E C U T E    T H E    C O M M A N D
+------------------------------------------------------------------------------
+1. to find all the relevent files and execute the command (once per file)
+find . -name \*.XYZ -type f -execdir <command> -f {} \;
+
+2. to find all the relevent files and execute the command (as minimum commands as 
+	possible) --preferred
+find . -name \*.XYZ -type f -execdir <command> -f {} + 
+
+
+-----------
+S C R E E N
+-----------
+1.TO KILL DEATTACHED SCREENS SESSIONS 
+screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
+
+2. TO KILL ALL SCREEN SESSIONS
+screen -ls | grep pts | cut -d. -f1 | awk '{print $1}' | xargs kill
+
+
+---------------------------------------
+F I N D I N G   T H E    PDF    B B O X
+---------------------------------------
+gs -o /dev/null -sDEVICE=bbox XYZ.pdf
+
+
+---------------------------------------------------------
+U S I N G   G H O S T   S C R I P T   T O   C O N V E R T
+---------------------------------------------------------
+gs                        \
+  -sDEVICE=pdfwrite        \
+  -dCompatibilityLevel=1.2 \
+  -o output.pdf            \
+     input.pdf 
+
+
+-----------------------
+P O W E R   S A V I N G
+-----------------------
+sudo pm-powersave true 	% for switching computer to powersaving mode
+sudo pm-powersave false	% for switching computer to performance mode
+
+
+-----------------------------------------------------------------------
+C O P Y I N G   T H E    F I L E    T O    A L L    S U B F O L D E R S
+-----------------------------------------------------------------------
+find /home/oblivion/Dropbox/research_backup/today_workding -type d -execdir cp 
+	/home/oblivion/Desktop/ploting_script.m {} \;
+
+
+---------------------------------------------------
+O P E N N I N G   T E X M A K E R   I N   1 6 . 0 4
+---------------------------------------------------
+Add these lines to .bashrc file (this file is placed in the /home folder)
+	export UBUNTU_MENUPROXY=
+OR
+Run texmaker like this
+	env UBUNTU_MENUPROXY= texmaker
+
+
+-------------------------------------------
+K I N D L E    P D F    C O N V E R S I O N
+------------------------------------------- 
+FOR THE IMAGE
+k2pdfopt -bp -col 2 -ls -wrap+ -x -ac -dr 2 -dev kv forms.pdf -o kk_ll.pdf
+FOR THE CHARACTER RECOGNITION (NATIVE OUTPUT -- IN PDF [LESS MEMORY BUT MORE TIME]) **
+k2pdfopt -bp -col 2 -ls -wrap- -x -ac -dr 2 -dev kv -n forms.pdf -o kk_ll.pdf
+
+
+-----------------------------------------------------------------------------------
+T O   D O W N L O A D   A L L   T H E   F I L E S   F R O M   T H E   W E B S I T E
+-----------------------------------------------------------------------------------
+mkdir 	course_website_name
+cd 	course_website_name
+---open terminal in the folder where you want to download and run:
+wget -r --no-parent <complete_url>
+
+---CAUTIONS: do not use -l0 it will download the whole internet when -l is not given 
+	it uses -l5 ---- it is the level of folders to download
+
+---To download the exact mirror of the website you want to download:
+wget --mirror -pc --convert-links -P ./your-local-dir/ http://www.your-website.com
+
+---To download specific file type from the website (add the file types to download 
+	with comma):
+wget --no-directories --content-disposition --restrict-file-names=nocontrol \
+    -e robots=off -A.pdf,.ppt,.doc -r url
+
+
+----------------------------------
+T O    R U N    C P P    C O D E S
+----------------------------------
+First run the code with input and output files specified.
+	g++ -std=c++0x <input_file.extension> -o <output_file>
+
+Run output file as
+	./output_file	
+
+--TO RUN CPP CODES WITH OLDER VERSION OF GCC COMPILER
+First install the version:
+	sudo apt-get update
+	sudo apt-get install g++-4.8	(it will install gcc compiler ver 4.8)
+
+Now run the command e.g.
+	make CXX=g++-4.8 CC=gcc-4.8 -j4	(to run make command with 4)
+
+
+-----------------------------------------
+T O   M A K E   D E S K T O P   I C O N S
+-----------------------------------------
+Install gnome-panel
+	sudo apt-get install gnome-panel
+
+Run it 
+	gnome-desktop-item-edit --create-new ~/Desktop
+
+
+--------------------------
+C H M O D    O P T I O N S
+--------------------------
+0 – no permission
+1 – execute
+2 – write
+3 – write and execute
+4 – read
+5 – read and execute
+6 – read and write
+7 – read, write, and execute
+
+permission to:  owner      group      other     
+                /¯¯¯\      /¯¯¯\      /¯¯¯\
+octal:            6          6          6
+binary:         1 1 0      1 1 0      1 1 0
+what to permit: r w x      r w x      r w x
+
+binary         - 1: enabled, 0: disabled
+
+what to permit - r: read, w: write, x: execute
+
+permission to  - owner: the user that create the file/folder
+                 group: the users from group that owner is member
+                 other: all other users
+
+e.g., 
+chmod -R 777 /path/to/the/folder
+will change recursively all the files and folders
+
+
+------------------------------------------------------------------------------
+I N S T A L L    O L D E R    V E R S I O N    O F    L I N U X    K E R N E L
+------------------------------------------------------------------------------
+From the following link 
+	http://kernel.ubuntu.com/~kernel-ppa/mainline/
+
+download the three files 
+	linux-headers-xxxxxx-generic-xxxxxx_amd64.deb
+	linux-headers-xxxxxx_all.deb
+	linux-image-xxxxxx-generic-xxxxxx_amd64.deb
+
+put them in one directory and run the follwing command
+	sudo dpkg -i *.deb
+
+
+-----------------------------------------------------
+TO PERMENTLY DELETE PROTECTED FILES FROM TRASH FOLDER
+-----------------------------------------------------
+sudo cd /home/USER_NAME/.local/share/Trash/
+
+
+---------------------------------------------
+T O    S P E L L    C H E C K    A    F I L E
+---------------------------------------------
+aspell check <filename.extension>
+
+
+-----------------------------------------------------------------------------
+T O   A R R A N G E    T H E     close, minimize and maximize   B U T T O N S
+-----------------------------------------------------------------------------
+
+close,minimize,maximize:
+gsettings set org.gnome.desktop.wm.preferences button-layout "close,minimize,maximize:"
+
+
+:minimize,maximize,close
+gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+
+
+close:minimize,maximize
+gsettings set org.gnome.desktop.wm.preferences button-layout "close:minimize,maximize"
+
+
+-------------------------------------------------
+T O    C H A N G E    T H E    F I L E    D A T E
+-------------------------------------------------
+touch
+-a = accessed
+-m = modified
+-t = timestamp [[CC]YY]MMDDhhmm[.ss] time format
+
+EXAMPLES: 
+1. To change only one file date:
+	touch <fileName.extsion>
+
+2. To change the date of all the files in the directory to a specific value:
+	find DIRECTORY -print | while read filename; do
+    		# do whatever you want with the file
+    		touch -d "$(date -R -r "$filename") - 2 hours" "$filename"
+	done
+
+3. To change access, modified date
+	touch -a -m -t 201512180130.09 <fileName.extsion>
+
+
+----------------------------------------------------------------------
+T O    C H E C K    T H E    N U M B E R    O F    P R O C E S S O R S
+----------------------------------------------------------------------
+cat /proc/cpuinfo | awk '/^processor/{print $3}'
+
+
+------------------------------------------------------------------------
+M A K E    M O V I E    F R O M    S E Q U E N C E    O F    I M A G E S
+------------------------------------------------------------------------
+GIF MOVIES:
+	ImageMagick should be installed. 
+	The images should be saved in a sequential manner. 
+	Run the following command:
+		convert -delay # -loop # *.extension outputfile.extension
+			here # is the number of seconds to delay between two images and 
+			number of loops respectively (0 will run it infinitely) . 
+			output tensions options
+
+AVI MOVIES:
+	ImageMagick, ffmpeg, and libav-tools should be installed.
+	Run the following command:
+		ffmpeg -framerate 25 -i image-%05d.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
+	Which means
+		-framerate: is the number of frames (images) per second
+		-i scene_%05d.jpg: this determines the file name sequence it looks for. image- means all the files
+		 	start with this. 0 is the number repeated, and the 5 is number of times (so it is looking for any
+		 	file starting at image-00000.jpg. The d is telling it to count up in whole numbers, so the files 
+		 	it will detect are everything from image-00001 to image-99999.
+		-c:v libx264: the video codec is libx264 (H.264).
+		-profile:v high: use H.264 High Profile (advanced features, better quality).
+		-crf 20: constant quality mode, very high quality (18 is the highest).
+		-pix_fmt yuv420p: use YUV pixel format and 4:2:0
+		output.mp4: The file name (output.mp4)
+Note: Works only with even X and Y resolutions. Does not work below 5 fps.
+
+--------------------------------------------
+R E S I Z E    A L L    T H E    I M A G E S
+--------------------------------------------
+ImageMagick should be installed.
+
+mogrify -resize 50% *.png      	# keep image aspect ratio
+mogrify -resize 320x240 *.png  	# keep image aspect ratio
+mogrify -resize 320x240! *.png 	# don't keep image aspect ratio
+mogrify -resize x240 *.png     	# don't keep image aspect ratio
+mogrify -resize 320x *.png     	# don't keep image aspect ratio
+
+---------------------------------------------------------------------
+I N S T A L L I N G    L A T E S T    V E R S I O N    O F    G M S H
+---------------------------------------------------------------------
+Download the latest version of gmsh from 	http://gmsh.info/#Download
+Unzip the downloaded file 
+Open terminal with sudo -i previlages.
+cd to the unzipped folder
+Run the following commands 
+	cp bin/gmsh /usr/bin/
+	cp -r share/doc/gmsh /usr/share/doc/
+	cp share/man/man1/gmsh.1 /usr/share/man/man1/
+Check for the installed version with 	gmsh --version
+
+-----------------------------------
+M E R G I N G    P D F    F I L E S
+-----------------------------------
+Install pdfunite and use the following command
+	pdfunite inputfile1.pdf inputfile2.pdf outputfile.pdf
+
+OR 
+
+Use convert command 
+	convert -density -300x300 -quality -100 inputfile1.pdf inputfile2.pdf outputfile.pdf
+
+----------------------------------------
+T O    E M B E D    T W O    V I D E O S  
+----------------------------------------
+HORIZONTALLY:
+	ffmpeg -i input1.mpeg -i input2.mpeg -filter_complex '[0:v]pad=iw*2:ih[int];[int][1:v]overlay=W/2:0[vid]' -map [vid] -c:v libx264 -crf 23 -preset veryfast output.mp4
+	
+	ffmpeg -i input1.mpeg -i input2.mpeg -q:v 1 -filter_complex hstack output.mpeg  			(prefered and working)
+
+VERTICALLY:
+	ffmpeg -i top.mov -vf 'pad=iw:2*ih [top]; movie=bottom.mov [bottom]; \[top][bottom] overlay=0:main_h/2' stacked.mov
+
+ 	ffmpeg -i input1.mpeg -i input2.mpeg -q:v 1 -filter_complex vstack output.mpeg  			(prefered and working)
+
+
+-------------------------------------------------------------
+I N S T A L L    A D O B E    R E A D E R    O N    L I N U X
+-------------------------------------------------------------
+sudo apt-get install libxml2:i386 
+sudo apt-get update
+sudo apt-get upgrade 
+apt-cache search adobereader-enu
+sudo add-apt-repository "deb http://archive.canonical.com/ precise partner"
+sudo apt-get update
+sudo apt install adobereader-enu
+sudo add-apt-repository -r "deb http://archive.canonical.com/ precise partner"
+
+
+----------------------------------------------
+R E V I V I N G    U N I T Y    D E S  K T O P
+----------------------------------------------
+Unity desktop can get broken because of couple of reasons, like recent update or upgrade of packages or more specifically because of the compiz (ccsm) option 'Enable Ubuntu Unity Plugin'. 
+
+	1. If you can still be able to open the terminal try these options. 
+		$: ccsm 
+	and recheck the Enable Ubuntu Unity Plugin option
+
+	2. If it is not because of compiz and still terminal access is available try to reinstall unity
+		$: sudo apt-get install --reinstall ubuntu-desktop
+		$: sudo apt-get install unity
+
+	3. Again if the terminal access is possible try this as well
+		$: sudo apt-get install dconf-tools
+		$: dconf reset -f /org/compiz
+		$: setsid unity
+
+	4. If terminal is not acessible then try TTY
+		ctrl + alt + f1
+		login with username and password
+		sudo gconftool --shutdown
+		sudo kill -r -I gconf (might not work)
+		sudo rm -rf .compiz* .gconf* .config/dconf/ .config/compiz* (this will delete all the user preferances for OS)
+
+
+---------------------------------------------------
+W R I T T I N G    T E X T    O N    A    V I D E O
+---------------------------------------------------
+ffmpeg -i input.mp4 -vf drawtext="fontfile=/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf: text='Finite Elements': fontcolor=black: fontsize=26: box=1: boxcolor=black@0.2: boxborderw=5: x=(w-text_w)/5: y=(h-text_h)/12" -codec:a copy output.mp4
+
+
+-----------------------------------------------------
+I N S T A L L I N G    T E X L I V E    P A C K A G E
+-----------------------------------------------------
+1. Download the package from ctan webpage.
+2. cd /usr/share/texlive/texmf-dist/tex/latex
+3. sudo mkdir picins
+4. copy the content in this new folder
+5. sudo texhash
+
+
+----------------------
+P D F    B O O K L E T
+----------------------
+1. pdfcrop to --margins '2 2 2 2' input.pdf output.pdf
+2. pdfbook input.pdf output.pdf 	(Look into manual)
+
+
+
+
+
+
+
+
+
+
+
+
+

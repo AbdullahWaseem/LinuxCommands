@@ -1,0 +1,24 @@
+		INSTALL DEAL II
+
+# Author: 	 Abdullah Waseem
+# Email:	 engineerabdullah@ymail.com
+# Last Modified: June, 2017
+
+downlaod the latext version and extract it in the folder
+
+create a install folder along with the dealii downloaded and extracted folder
+
+cd to dealii extracted folder 
+
+make a folder name build 
+
+run the following command
+	cmake -DDCMAKE_INSTALL_PREFIX=/path/to/install/folder ..
+
+make -jn		(n is the number of cores you want to use to make)
+
+make install
+
+make test
+
+
